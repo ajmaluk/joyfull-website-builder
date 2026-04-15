@@ -110,7 +110,7 @@ const SettingsPage = () => {
                     ) : keys?.length === 0 ? (
                       <div className="p-4 text-center text-sm text-muted-foreground">No API keys found</div>
                     ) : (
-                      keys?.map((key: any) => (
+                      keys?.map((key: { id: string; name: string; key: string; createdAt: string | Date }) => (
                         <div key={key.id} className="p-4 flex items-center justify-between">
                           <div className="flex flex-col">
                             <span className="font-medium">{key.name}</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "@clerk/nextjs";
+
 import { Suspense, useState } from "react";
 import { EyeIcon, CodeIcon, CrownIcon } from "lucide-react";
 
@@ -22,7 +22,7 @@ import { MessagesContainer } from "../components/messages-container";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { useTRPC } from "@/trpc/client";
-import { PRO_PLAN_ID, ENTERPRISE_PLAN_ID } from "@/lib/constants";
+
 import { useQuery } from "@tanstack/react-query";
 
 interface Props {

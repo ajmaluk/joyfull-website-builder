@@ -13,7 +13,7 @@ export const syncClerkMetadata = inngest.createFunction(
       // We extract the plan from the subscription data if available, or just rely on publicMetadata
       // For this implementation, we ensure the 'plan' is synced correctly
       
-      const user = await clerk.users.getUser(userId);
+      await clerk.users.getUser(userId);
       // Logic to sync or verify metadata if needed
       return { success: true, userId };
     });

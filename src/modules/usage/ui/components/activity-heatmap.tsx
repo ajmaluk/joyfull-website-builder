@@ -3,14 +3,9 @@
 import { useMemo } from "react";
 import { 
   format, 
-  startOfYear, 
-  endOfYear, 
   eachDayOfInterval, 
-  isSameDay, 
   subYears,
-  getDay,
-  startOfWeek,
-  addDays
+  getDay
 } from "date-fns";
 import { 
   Tooltip,
@@ -34,7 +29,7 @@ export const ActivityHeatmap = () => {
     
     // Group activities by date
     const activityCountByDate: Record<string, number> = {};
-    activityDates?.forEach((dateStr: any) => {
+    activityDates?.forEach((dateStr: string | number | Date) => {
       const date = format(new Date(dateStr), "yyyy-MM-dd");
       activityCountByDate[date] = (activityCountByDate[date] || 0) + 1;
     });
@@ -62,8 +57,8 @@ export const ActivityHeatmap = () => {
   }
 
   // Group days into weeks for the grid
-  const weeks: any[][] = [];
-  let currentWeek: any[] = [];
+  const weeks: (typeof days[0] | null)[][] = [];
+  let currentWeek: (typeof days[0] | null)[] = [];
 
   // Pad the first week if necessary
   const firstDay = days[0].day;
@@ -87,10 +82,7 @@ export const ActivityHeatmap = () => {
     weeks.push(currentWeek);
   }
 
-  const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
+
 
   return (
     <div className="p-4 border rounded-xl bg-card">

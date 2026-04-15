@@ -26,9 +26,9 @@ export const codeAgentFunction = inngest.createFunction(
       const memberships = await clerk.users.getOrganizationMembershipList({ userId: event.data.userId });
       
       // Production-ready check: check subscription data first, then fallback to publicMetadata
-      const plan = (user.publicMetadata as any)?.plan;
+      const plan = (user.publicMetadata as Record<string, unknown>)?.plan;
       const hasProOrEnterpriseSubscription = memberships.data?.some(
-        (m: any) => m.publicMetadata?.plan === PRO_PLAN_ID || m.publicMetadata?.plan === ENTERPRISE_PLAN_ID
+        (m: { publicMetadata?: { plan?: unknown } }) => m.publicMetadata?.plan === PRO_PLAN_ID || m.publicMetadata?.plan === ENTERPRISE_PLAN_ID
       );
       
       const isProOrEnterprise = plan === PRO_PLAN_ID || plan === ENTERPRISE_PLAN_ID || hasProOrEnterpriseSubscription;
