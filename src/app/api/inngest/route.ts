@@ -1,5 +1,7 @@
 import { serve } from "inngest/next";
 
+export const runtime = 'edge';
+
 import { inngest } from "@/inngest/client";
 import { codeAgentFunction } from "@/inngest/functions";
 import { syncClerkMetadata } from "@/inngest/sync";

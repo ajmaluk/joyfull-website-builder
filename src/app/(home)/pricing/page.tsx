@@ -1,5 +1,8 @@
 "use client";
 
+export const runtime = 'edge';
+
+
 import Image from "next/image";
 import { dark } from "@clerk/themes";
 import { PricingTable } from "@clerk/nextjs";

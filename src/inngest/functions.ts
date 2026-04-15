@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Sandbox } from "@e2b/code-interpreter";
+
 import { createClerkClient } from "@clerk/nextjs/server";
 import { openai, createAgent, createTool, createNetwork, type Tool, type Message, createState } from "@inngest/agent-kit";
 
@@ -39,11 +39,13 @@ export const codeAgentFunction = inngest.createFunction(
     });
 
     const sandboxId = await step.run("get-sandbox-id", async () => {
+      const { Sandbox } = await import("@e2b/code-interpreter");
       const templateId = process.env.NEXT_PUBLIC_E2B_TEMPLATE_ID || "vibe-nextjs-test-2";
       const sandbox = await Sandbox.create(templateId);
       await sandbox.setTimeout(SANDBOX_TIMEOUT);
       return sandbox.sandboxId;
     });
+
 
     const previousMessages = await step.run("get-previous-messages", async () => {
       const formattedMessages: Message[] = [];

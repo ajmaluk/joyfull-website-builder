@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = 'edge';
+
 import { dark } from "@clerk/themes";
 import { SignIn } from "@clerk/nextjs";
 

@@ -1,5 +1,8 @@
 import Image from "next/image";
 
+export const runtime = 'edge';
+
+
 import { ProjectForm } from "@/modules/home/ui/components/project-form";
 import { ProjectsList } from "@/modules/home/ui/components/projects-list";
 import { ActivityHeatmap } from "@/modules/usage/ui/components/activity-heatmap";

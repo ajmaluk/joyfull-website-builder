@@ -1,8 +1,10 @@
+export const runtime = 'edge';
+
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import { getQueryClient, trpc } from "@/trpc/server";
+import { getQueryClient, caller } from "@/trpc/server";
 
 import { ProjectView } from "@/modules/projects/ui/views/project-view";
 
@@ -16,12 +18,17 @@ const Page = async ({ params }: Props) => {
   const { projectId } = await params;
 
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(trpc.messages.getMany.queryOptions({
-    projectId,
-  }));
-  void queryClient.prefetchQuery(trpc.projects.getOne.queryOptions({
-    id: projectId,
-  }));
+  
+  // Prefetching using the caller
+  await queryClient.prefetchQuery({
+    queryKey: [["messages", "getMany"], { input: { projectId }, type: "query" }],
+    queryFn: () => caller.messages.getMany({ projectId }),
+  });
+  
+  await queryClient.prefetchQuery({
+    queryKey: [["projects", "getOne"], { input: { id: projectId }, type: "query" }],
+    queryFn: () => caller.projects.getOne({ id: projectId }),
+  });
 
   return ( 
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -35,3 +42,4 @@ const Page = async ({ params }: Props) => {
 };
  
 export default Page;
+
